@@ -1,0 +1,70 @@
+.MainNavbarContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(247, 247, 247);
+    border: 1px solid rgb(242, 242, 242);
+
+}
+
+.searchIcon{
+    width: 20px;
+    height: 20px;
+}
+
+.NotificationIcon{
+    width: 20px;
+    height: 20px;
+    background-color: rgb(208, 213, 213);
+    padding: 4px;
+    border-radius: 6px;
+    margin-left: 10px;
+}
+
+.ProfileIcon{
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    margin-left: 25px;
+}
+
+.dashboardContainer{
+    flex: 0.7;
+}
+
+.profileName{
+    margin-left: 7px;
+}
+
+.searchItemsContainer{
+    display: flex;
+    flex: 2;
+    margin-right: 100px;
+    background-color: rgb(210, 210, 210);
+    padding: 6px;
+    border-radius: 16px;
+    border: 1px solid rgb(199, 199, 199);
+}
+
+.searchInput{
+    width: 100%;
+    border: none;
+    padding: 3px;
+    background-color: rgb(210, 210, 210);
+}
+
+.searchInput:focus{
+    outline: none;   
+}
+
+.profileItemsContainer{
+    display: flex;
+    flex: 0.5;
+    align-items: center;
+    margin-right: 2%;
+}
+
+.dashtext{
+    font-size: 20px;
+    margin-left: 2%;
+}

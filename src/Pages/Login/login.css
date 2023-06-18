@@ -1,0 +1,232 @@
+  *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body, html {
+    font-family: Nunito, sans-serif;
+  }
+  
+  .container2 {
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .container-login {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    background: rgb(22,19,18);
+background: linear-gradient(40deg, rgba(22,19,18,1) 0%, rgba(192,192,192) 68%, rgba(22,19,18,11) 101%);
+
+    
+  }
+  
+.wrap-login {
+    border-radius: 50px;
+    width: 390px;
+    background-color: #333;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 30px 55px 33px 55px;
+    border-radius: 50px;
+
+  }  
+  
+  .login-form {
+    width: 100%;
+    
+  }
+  
+  .login-form-title {
+    font-family: Nunito, sans-serif;
+    display: block;
+    font-size: 30px;
+    color: azure;
+    line-height: 1.2;
+    text-align: center;
+    top: -40px;
+    
+  }
+  
+  .login-form-title img {
+    width: 300px;
+    top: 40px; 
+    padding-right: 8%;
+  }
+  
+  .wrap-input {
+    width: 100%;
+    position: relative;
+    border-bottom: 2px solid #adadad;
+    margin-bottom: 37px;
+  }
+  
+  .input {
+    font-size: 15px;
+    color: #fff;
+    line-height: 1.2;
+    border: none;
+    display: block;
+    width: 100%;
+    height: 45px;
+    background-color: transparent;
+    padding: 0 5px;
+    font-family: Nunito, sans-serif;
+  }
+  
+  .focus-input {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    color: #adadad;
+    font-family: Nunito, sans-serif;
+  }
+  
+  .focus-input::before {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+   
+  }
+  
+  .focus-input::after {
+    font-family: Nunito, sans-serif;
+    font-size: 15px;
+    color: #999999;
+    line-height: 1.2;
+    content: attr(data-placeholder);
+    display: block;
+    width: 100%;
+    position: absolute;
+    top: 16px;
+    left: 0px;
+    padding-left: 5px;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+  }
+  
+  .input:focus {
+    outline: 0;
+  }
+  
+  .input:focus+.focus-input::after {
+    top: -15px;
+  }
+  
+  .input:focus+.focus-input::before {
+    width: 100%;
+  }
+  
+  .has-val+.focus-input::after {
+    top: -15px;
+  }
+  
+  .has-val+.focus-input::before {
+    width: 100%;
+  }
+  
+
+  .button {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+
+   
+
+    }
+
+  .button:after{
+    content:"";
+    height:100%;
+    width: 51%;
+    padding:4px;
+    position: absolute;
+    top: 7px;
+    z-index:0;
+    background-color:#000000;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+  }
+  
+  .button a {
+    color: #363636;
+    font-family: Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 26px;
+    text-align: center;
+    text-decoration: none;
+    z-index:1;
+
+    background-color: #FFF;
+    display: block;
+    position: relative;
+    padding: 14px 28px;
+    
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    text-shadow: 0px 1px 0px #000;
+    filter: dropshadow(color=#000, offx=0px, offy=1px);
+    
+    -webkit-box-shadow:inset 0 1px 0 #FFE5C4, 0 10px 0 #808080;
+    -moz-box-shadow:inset 0 1px 0 #FFE5C4, 0 10px 0 #808080;
+    box-shadow:inset 0 1px 0 #FFE5C4, 0 10px 0 #808080;
+    
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+  }
+  
+  .button a:active{
+    top:10px;
+    background-color:#808080;
+    
+    -webkit-box-shadow:inset 0 1px 0 #FFE5C4, inset 0 -3px 0 #808080;
+    -moz-box-shadow:inset 0 1px 0 #FFE5C4, inset 0 -3pxpx 0 #808080;
+    box-shadow:inset 0 1px 0 #FFE5C4, inset 0 -3px 0 #808080;
+    
+  }
+  
+
+  
+  .text-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+  }
+  
+  .txt1 {
+    font-size: 14px;
+    color: #adadad;
+    line-height: 1.5;
+    padding-right: 5px;
+  }
+  
+  .txt2 {
+    font-size: 14px;
+    color: #6a7dfe;
+    line-height: 1.5;
+    text-decoration: none;
+  }

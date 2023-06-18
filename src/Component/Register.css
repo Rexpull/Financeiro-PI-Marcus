@@ -1,0 +1,83 @@
+
+.TeamMembers{
+    flex: 4;
+    background-color: rgba(224, 216, 216, 0.226);
+}
+
+.userListEdit{
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    background-color: rgb(186, 219, 244);
+    border: none;
+    border-radius: 5px;
+}
+
+
+.lapisDiv {
+    width: 58%;
+    height: 260%;
+    border-radius: 6px;
+
+}
+
+.lapisDiv:hover {
+    width: 55%;
+    height: 260%;
+    border-radius: 6px;
+
+}
+
+.lapisImg {
+    width: 38%;
+}
+
+.selectModal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+.modal-content {
+    width: 90%;
+    max-width: 500px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+button {
+    padding: 5px;
+    font-size: large;
+    float: right;
+    cursor: pointer;
+}
+
+.ReactModal__Overlay{
+    background-color: rgba(0, 0, 0, 0.075);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.ReactModal__Content{
+    width: 50%;
+    height: 40%;
+}
+
+.buttonModal {
+    border: none;
+}
+
+.buttonModal:hover {
+    border: none;
+}

@@ -1,0 +1,65 @@
+.mainSidebarContainer{
+    flex: 0.8;
+    background-color: #192A64;
+}
+
+.ulContainer{
+    margin-top: 30px;
+}
+
+.liContainer{
+    display: flex;
+    align-items: center;
+    margin-top: -7px;
+}
+
+.menu{
+    display: flex;
+    color: white;
+    margin-left: -10px;
+}
+
+.adminsContainer{
+     display: flex;
+     margin-top: -10px;
+}
+
+.adminText{
+    font-size: 20px;
+    margin-left: 40px;
+}
+
+.sidebaricons{
+    width: 20px;
+    height: 20px;
+}
+
+.itemNames{
+    margin-left: 10px;
+    color: white;
+}
+
+.ScheduledContainer{
+    display: flex;
+    margin-left: 30px;
+    padding: 10px;
+    margin-right: 10px;
+    background-color: rgba(67, 66, 67, 0.193);
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.ScheduledTitle{
+    font-size: 14px;
+    color: rgb(70, 76, 81);
+    margin-right: 80px;
+}
+
+.mainSchedeledContainer{
+    margin-top: 80px;
+}
+
+.profileItems{
+    display: flex;
+    align-items: center;
+}
