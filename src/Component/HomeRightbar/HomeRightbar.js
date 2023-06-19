@@ -252,7 +252,7 @@ const [data7Previous, setData7Previous] = React.useState([]);
               <span className='box-pagar-mensal mensal-right' >Mensal</span>
             </div>
 
-            <AreaChart width={1800} height={190} data={data4}
+            <AreaChart width={1450} height={190} data={data4}
               margin={{ top: 10, right: 5, left: 5, bottom: 10 }}>
               <defs>
                 <linearGradient id="colorCp" x1="0" y1="0" x2="0" y2="1">
@@ -351,7 +351,7 @@ const [data7Previous, setData7Previous] = React.useState([]);
                 <span className='box-pagar-anual'>Anual</span>
               </div>
               <div className='chartDirection'>
-                <ComposedChart width={1270} height={190} data={data6}>
+                <ComposedChart width={970} height={190} data={data6}>
                 
                   <XAxis dataKey="name" />
                   <YAxis />
