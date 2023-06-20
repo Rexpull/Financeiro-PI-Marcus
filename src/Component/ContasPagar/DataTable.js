@@ -4,7 +4,7 @@ import { TableRow, TableCell } from '@mui/material';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faFile,faMoneyBillWave,faCheck,faTrashCan,faPenToSquare,faArrowRightArrowLeft,faInfo} from '@fortawesome/free-solid-svg-icons';
+import {faFile,faMoneyBillWave,faCheck,faTrashCan,faPenToSquare,faArrowRightArrowLeft,faInfo,faFileInvoiceDollar} from '@fortawesome/free-solid-svg-icons';
 import { faPix } from '@fortawesome/free-brands-svg-icons';
 import '../../styles/index.css';
 import EditModal from './EditModal';
@@ -14,7 +14,7 @@ import InfoModal from './InfoModal';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import Slide from '@mui/material/Slide';
-import Loading from "../../Pages/img/loading.svg";
+
 
 
 function DataTable({ mhs, refresh }) {
@@ -224,6 +224,8 @@ function DataTable({ mhs, refresh }) {
         return <FontAwesomeIcon icon={faMoneyBillWave} />;
       case 'PIX':
         return <FontAwesomeIcon icon={faPix} />;
+      case 'Varias':
+        return <FontAwesomeIcon icon={faFileInvoiceDollar} />
       default:
         return null;
     }
@@ -310,16 +312,20 @@ function DataTable({ mhs, refresh }) {
             className="recebimento-child "
             style={{
               color:
-                mhs.forma_quitacao === 'Dinheiro'
+                  mhs.forma_quitacao === 'Dinheiro'
                   ? '#1b5e20'
                   : mhs.forma_quitacao === 'PIX'
                   ? 'orange'
+                  : mhs.forma_quitacao === 'Varias'
+                  ? '#884A39'
                   : '',
               textShadow:
                 mhs.forma_quitacao === 'Dinheiro'
                   ? '0px 10px 14px -7px #1b5e20'
                   : mhs.forma_quitacao === 'PIX'
                   ? '0px 10px 13px -7px #b56f05'
+                  : mhs.forma_quitacao === 'Varias'
+                  ? '0px 10px 13px -7px #2B2A4C'
                   : ''
             }}
           >

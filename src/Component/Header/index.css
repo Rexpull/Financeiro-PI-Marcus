@@ -160,20 +160,30 @@ ul{
 .css-1ka5eyc-MuiPaper-root-MuiMenu-paper-MuiPopover-paper {
   background-color: #4b4a4a !important;
   color: white !important;
-  width: 210px !important;
-  margin-right: 190px !important;
-
+  max-width: 200px !important;
+  flex-wrap: wrap !important;
+  flex-direction: column !important;
+  overflow-wrap: break-word !important;
+  text-overflow: clip !important;
+  word-wrap: break-word !important;
+  overflow: hidden !important;
+  white-space: wrap !important;
+  align-items: center !important;
 }
 
 .notifi-item{
-  height: 80px !important;
+  height: 60px !important;
   flex-wrap: wrap !important;
-  font-size: 8px !important;
+  font-size: 10px !important;
   display: flex !important;
   align-items: center !important;
   max-width: 100% !important;
   justify-content: flex-start !important;
-  
+  flex-direction: column !important;
+  overflow-wrap: break-word !important;
+  text-overflow: clip !important;
+  word-wrap: break-word !important;
+  white-space: wrap !important;
 }
 
 .dropdown-menu{

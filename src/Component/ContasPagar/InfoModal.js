@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { faTimes, faFile, faInfo, faQuestion, faMoneyBillWave } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faFile, faInfo, faQuestion, faMoneyBillWave,faFileInvoiceDollar } from '@fortawesome/free-solid-svg-icons';
 import { faPix } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Tabs, Tab, Table, TableHead, TableBody, TableRow, TableCell, TableContainer } from '@material-ui/core';
@@ -19,6 +19,8 @@ const InfoModal = ({ show, handleClose, mhs }) => {
         return <FontAwesomeIcon icon={faMoneyBillWave} />;
       case 'PIX':
         return <FontAwesomeIcon icon={faPix} />;
+      case 'Varias':
+        return <FontAwesomeIcon icon={faFileInvoiceDollar} />
       default:
         return null;
     }
@@ -188,16 +190,20 @@ const InfoModal = ({ show, handleClose, mhs }) => {
             className="recebimento-child "
             style={{
               color:
-                mhs.forma_quitacao === 'Dinheiro'
+                  mhs.forma_quitacao === 'Dinheiro'
                   ? '#1b5e20'
                   : mhs.forma_quitacao === 'PIX'
                   ? 'orange'
+                  : mhs.forma_quitacao === 'Varias'
+                  ? '#884A39'
                   : '',
               textShadow:
                 mhs.forma_quitacao === 'Dinheiro'
                   ? '0px 10px 14px -7px #1b5e20'
                   : mhs.forma_quitacao === 'PIX'
                   ? '0px 10px 13px -7px #b56f05'
+                  : mhs.forma_quitacao === 'Varias'
+                  ? '0px 10px 13px -7px #2B2A4C'
                   : ''
             }}
           >

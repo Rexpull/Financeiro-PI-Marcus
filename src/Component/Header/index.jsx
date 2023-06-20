@@ -4,7 +4,7 @@ import Usuario from '../../Pages/img/Quintal_logo.png';
 import { Container } from './styles';
 import { FaBars } from 'react-icons/fa';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRightFromBracket, faLock, faChevronDown, faCheck, faBell, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { faRightFromBracket, faLock, faChevronDown, faCheck, faBell , faTriangleExclamation} from '@fortawesome/free-solid-svg-icons';
 import Sidebar from '../Sidebar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 import Badge from '@mui/material/Badge';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-
+import { Modal, Button, Form } from 'react-bootstrap';
 
 const Header = () => {
   const [sidebar, setSidebar] = useState(false);
@@ -22,6 +22,30 @@ const Header = () => {
   const [notificationOpen, setNotificationOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [badgeContent, setBadgeContent] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [currentPassword, setCurrentPassword] = useState('');
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+    console.log('ABRIU!')
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleSaveChanges = () => {
+    if (newPassword !== confirmPassword) {
+      setPasswordError('As senhas não coincidem.');
+    } else {
+      // Lógica para salvar as alterações da senha
+      setShowModal(false);
+    }
+  };
+
 
   const fetchBadgeContent = () => {
     // Replace the fictitious API call with your actual backend code to fetch the badge value
@@ -116,10 +140,20 @@ const Header = () => {
                     key={notification.id}
                     onClick={() => handleNotificationClick(notification)}
                   >
-                    <FontAwesomeIcon icon={faTriangleExclamation} />
+                   
+                    <FontAwesomeIcon icon={faTriangleExclamation}  style={{marginRight:'5px', width:'15px',height:'15px' ,
+                  color:
+                  notification.tipo === 'CR'
+                    ? 'green'
+                    : notification.tipo === 'CP'
+                    ? 'orange'
+                    : ''}}
+                    />
                     {` O documento ${notification.num_docto} do ${
                       notification.tipo === 'CR' ? 'cliente' : 'fornecedor' 
-                    } ${notification.cliente} está vencendo hoje no valor de R$ ${notification.valor}`}
+                    } ${notification.cliente} `}
+                    {`está vencendo hoje! Valor de R$ ${notification.valor}`}
+                   
                   </MenuItem>
                 ))}
               </Menu>
@@ -130,15 +164,16 @@ const Header = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose} className="dropdown-child">
+                <MenuItem onClick={handleOpenModal} className="dropdown-child">
                   <FontAwesomeIcon icon={faLock} /> Alterar senha
                 </MenuItem>
-                <MenuItem onClick={handleClose} className="dropdown-child">
-                  <FontAwesomeIcon
-                    icon={faRightFromBracket}
-                    rotation={180}
-                  />{' '}
-                  Log Out
+                <MenuItem
+                  component={Link}
+                    to="/" // ajuste o caminho para o diretório correto
+                    onClick={handleClose}
+                    className="dropdown-child"
+>
+                    <FontAwesomeIcon icon={faRightFromBracket} rotation={180} /> Log Out
                 </MenuItem>
               </Menu>
             </div>
@@ -183,6 +218,53 @@ const Header = () => {
         </div>
       </div>
 
+
+  <Modal show={showModal} onHide={handleCloseModal} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Alterar Senha</Modal.Title>
+        </Modal.Header>
+  <Modal.Body>
+  <Form>
+    <Form.Group controlId="currentPassword">
+      <Form.Label>Senha Atual: <span className="required-add">*</span></Form.Label>
+      <Form.Control
+        type="password"
+        value={currentPassword}
+        onChange={(e) => setCurrentPassword(e.target.value)}
+        required
+      />
+    </Form.Group>
+
+    <Form.Group controlId="newPassword">
+      <Form.Label>Nova Senha: <span className="required-add">*</span></Form.Label>
+      <Form.Control
+        type="password"
+        value={newPassword}
+        onChange={(e) => setNewPassword(e.target.value)}
+        required
+      />
+    </Form.Group>
+
+    <Form.Group controlId="confirmPassword">
+      <Form.Label>Confirmar Senha: <span className="required-add">*</span></Form.Label>
+      <Form.Control
+        type="password"
+        value={confirmPassword}
+        onChange={(e) => setConfirmPassword(e.target.value)}
+        required
+      />
+    </Form.Group>
+
+    {passwordError && <div className="error-message">{passwordError}</div>}
+  </Form>
+</Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleSaveChanges}>
+            Salvar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      
       <FaBars onClick={showSidebar} />
       {sidebar && <Sidebar active={setSidebar} />}
     </Container>

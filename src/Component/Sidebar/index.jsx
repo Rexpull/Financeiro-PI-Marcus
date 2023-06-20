@@ -25,7 +25,7 @@ const Sidebar = ({ active }) => {
             <FaTimes onClick={closeSidebar} />
             <Content>
                 <Link to={'/Home'} style={{textDecoration:'none'}}>
-                    <SidebarItem  Icon={FaHome} Text="Pagina Inicial"/>
+                    <SidebarItem  Icon={FaHome} Text="DashBoard"/>
                 </Link>
                 <Link to={"/ContasPagar"} style={{textDecoration:'none'}}>
                     <SidebarItem  Icon={FaSortAmountUp} Text="Contar à Pagar" />

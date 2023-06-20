@@ -14,7 +14,7 @@ import MuiAlert from '@mui/material/Alert';
 import Slide from '@mui/material/Slide';
 import NotFound from '../../Pages/img/114398-no-transaction-history.gif'
 
-function ReceiveModal({ show, handleClose, formData, handleChange, handleSubmit, registroData, refresh }) {
+function ReceiveModal({ show, handleClose, formData, handleChange, handleSubmit, registroData  }) {
   const [section, setSection] = useState('recebimento');
   const { cliente, num_docto, valor, dt_lancamento, situacao, dt_vencimento, id, multa, juros, desconto, observacao } = registroData;
   const [formasPagamento, setFormasPagamento] = useState([]);
@@ -22,14 +22,38 @@ function ReceiveModal({ show, handleClose, formData, handleChange, handleSubmit,
   const isValorRestanteZero = valorRestante === 0;
   const [pagamentoConfirmado, setPagamentoConfirmado] = useState(null);
   const [temPagamentosMultiplos, setTemPagamentosMultiplos] = useState(false);
+  const [valorPagoDireita, setValorPagoDireita] = useState(0);
+  const [pagamentosIguais, setPagamentosIguais] = useState(true);
+  const [abrirModalVencimento, setAbrirModalVencimento] = useState(false);
+  const [dataVencimento, setDataVencimento] = useState(null);
+  const [temRegistrosTemporarios, setTemRegistrosTemporarios] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+
+
+  const verificarRegistrosTemporarios = () => {
+    setTemRegistrosTemporarios(formasPagamento.length > 0);
+  };
+ 
+  
 
   const atualizarValorRestante = () => {
     const somaPagamentos = formasPagamento.reduce((total, pagamento) => total + pagamento.valor, 0);
     setValorRestante(valor - somaPagamentos);
   };
 
+  const verificarPagamentosIguais = () => {
+    const formasPagamentoUnicas = [...new Set(formasPagamento.map(pagamento => pagamento.forma))];
+    setPagamentosIguais(formasPagamentoUnicas.length === 1);
+  };
+  
+
+  
   useEffect(() => {
     atualizarValorRestante();
+    verificarPagamentosIguais();
+    verificarRegistrosTemporarios();
+
   }, [formasPagamento]);
   
   const [receiveSnackbarOpen, setReceiveSnackbarOpen] = useState(false);
@@ -40,12 +64,20 @@ function ReceiveModal({ show, handleClose, formData, handleChange, handleSubmit,
   };
   
   const handleNextSectionConfirma = () => {
-    setSection('confirmacao');
+      setSection('confirmacao');
   };
 
   const handlePreviousSectionConfirma = () => {
-    setSection('formaPagamento');
+      setSection('formaPagamento');
   };
+
+  const handleNextVencimento = () => {
+    if (valorRestante > 0){
+      setAbrirModalVencimento(true);
+    } else {
+      handleFormSubmit();
+    }
+  }
 
   const handlePreviousSection = () => {
     setSection('recebimento');
@@ -77,26 +109,46 @@ function ReceiveModal({ show, handleClose, formData, handleChange, handleSubmit,
     const novoValorRecebido = parseFloat(formData.valor_recebido);
     const somaPagamentos = formasPagamento.reduce((total, pagamento) => total + pagamento.valor, 0);
     const novoValorRestante = valor - (somaPagamentos + novoValorRecebido);
-    const novaFormaQuitacao = formData.forma_quitacao;
+    const novaFormaQuitacao = temPagamentosMultiplos ? "Varias" : parseFloat(formData.forma_quitacao);
     const temPagamentosDiferentes = formasPagamento.some(pagamento => pagamento.forma !== novaFormaQuitacao);
     setTemPagamentosMultiplos(temPagamentosDiferentes);
 
-    
-    if (novoValorRestante >= 0) {
+    const novoValorPagoDireita = valorPagoDireita + novoValorRecebido;
+    setValorPagoDireita(novoValorPagoDireita);
+
+      if (novoValorRestante >= 0) {
+        let formaQuitacao = formData.forma_quitacao; // Forma de quitação padrão
+
+      if (formData.forma_quitacao === "PIX" && valorPagoDireita === 0) {
+        formaQuitacao = "PIX"; // Altera a forma de quitação para "PIX" se for o único valor disponível na tabela temporária à direita
+      } else if (formData.forma_quitacao === "Dinheiro" && valorPagoDireita === 0) {
+        formaQuitacao = "Dinheiro"; // Altera a forma de quitação para "Dinheiro" se for o único valor disponível na tabela temporária à direita
+      }
+
       const novaFormaPagamento = {
-        forma: formData.forma_quitacao,
+        forma: formaQuitacao, // Usa a forma de quitação determinada acima
         data: formData.data_recebimento,
         valor: novoValorRecebido
       };
+
+      
+
+      const temPagamentosDiferentes = formasPagamento.some(pagamento => pagamento.forma !== novaFormaQuitacao);
+      setTemPagamentosMultiplos(temPagamentosDiferentes);
+
+      if (temPagamentosDiferentes) {
+        setPagamentosIguais(false);
+      }
 
       setFormasPagamento([...formasPagamento, novaFormaPagamento]);
 
       // Atualizar o valor restante
       setValorRestante(novoValorRestante);
 
+
       // Limpar os campos após adicionar
       handleChange({ target: { name: 'forma_quitacao', value: '' } });
-      handleChange({ target: { name: 'data_recebimento', value: null } });
+      handleChange({ target: { name: 'data_recebimento', value: formData.data_recebimento } });
       handleChange({ target: { name: 'valor_recebido', value: '' } });
     } else {
       console.log('O valor total dos pagamentos não pode exceder o valor do documento');
@@ -111,14 +163,16 @@ function ReceiveModal({ show, handleClose, formData, handleChange, handleSubmit,
   const handleDeleteFormaPagamento = (index) => {
     const pagamentoRemovido = formasPagamento[index];
     const novoValorRestante = valorRestante + pagamentoRemovido.valor;
-  
+    const novoValorPagoDireita = valorPagoDireita - pagamentoRemovido.valor; // Subtrai o valor removido
+
     setFormasPagamento((prevFormasPagamento) => {
       const updatedFormasPagamento = [...prevFormasPagamento];
       updatedFormasPagamento.splice(index, 1);
   
       // Atualizar o valor restante
       setValorRestante(novoValorRestante);
-  
+      setValorPagoDireita(novoValorPagoDireita);
+
       return updatedFormasPagamento;
     });
   };
@@ -137,62 +191,74 @@ function ReceiveModal({ show, handleClose, formData, handleChange, handleSubmit,
       });
     }
   };
-  
-  const handleDateChange = (name) => (date) => {
-    if (isValidDate(date)) {
-      handleChange({ target: { name, value: date } });
-    } else {
-      console.log('Data inválida');
-    }
-  };
-  
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    
-  const valorRecebido = temPagamentosMultiplos ? "Varias" : parseFloat(formData.valor_recebido);
-  console.log(formData.valor_recebido)
 
-const data = {
-  id: id,
-  multa: formData.multa,
-  juros: formData.juros,
-  desconto: formData.desconto,
-  observacao: formData.observacao,
-  forma_quitacao: formData.forma_quitacao,
-  valor_recebido: isNaN(valorRecebido) ? null : valorRecebido,
-  dt_recebimento: formData.data_recebimento ? format(formData.data_recebimento, 'yyyy-MM-dd') : '',
+  const today = new Date();
+  const handleDateChange = (name) => (date) => {
+  if (isValidDate(date)) {
+    handleChange({ target: { name, value: date } });
+  } else {
+    console.log('Data inválida');
+  }
 };
 
-  const dataPayment = {
-    id: id,
-    forma_quitacao: formData.forma_quitacao,
-    valor_recebido: isNaN(valorRecebido) ? null : valorRecebido,
-    dt_recebimento: formData.data_recebimento 
-  }
+const valorRecebido = parseFloat(valorPagoDireita);
+const handleFormSubmit = async (event) => {
+    event.preventDefault();
 
-    setPagamentoConfirmado(dataPayment); // Atualiza o estado com os dados de pagamento confirmados
+    if (abrirModalVencimento) {
+      // Se o modal de vencimento estiver aberto, não envie os dados ainda
+      console.log('Aguardando data de vencimento do valor restante');
+      return;
+    }
+    
+      console.log(formData.valor_recebido)
+      const formaQuitacao = pagamentosIguais && formasPagamento.length > 0? formasPagamento[0].forma: "Varias";
+      let dataRecebimento = format(formData.data_recebimento, 'yyyy-MM-dd')
 
-  
-    // Envia a requisição para o backend
-    try {
-      const response = await API.post('paymhs.php', data, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
 
-      console.log(response.data);
+    const data = {
+      id: id,
+      multa: formData.multa,
+      juros: formData.juros,
+      desconto: formData.desconto,
+      observacao: formData.observacao,
+      forma_quitacao: formaQuitacao,
+      valor_recebido: valorRecebido,
+      dt_recebimento: dataRecebimento,
+    };
 
-      handleClose();
+      const dataPayment = {
+        id: id,
+        num_docto: num_docto + '-1',
+        cliente: cliente,
+        valor: isNaN(valorRestante) ? null : valorRestante,
+        data_vencimento: formData.data_recebimento 
+      }
+
+        setPagamentoConfirmado(dataPayment); // Atualiza o estado com os dados de pagamento confirmados
 
       
-    } catch (error) {
-      console.log(error);
-    }
-  
-    // Feche o modal após enviar os dados
-    showReceiveSnackbar();
-    handleClose();
+        // Envia a requisição para o backend
+        try {
+          const response = await API.post('paymhs.php', data, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+
+          console.log(response.data);
+
+          handleClose();
+
+          
+        } catch (error) {
+          console.log(error);
+        }
+      
+        // Feche o modal após enviar os dados
+        showReceiveSnackbar();
+        handleClose();
+        setLoading(false);
   };
   
   useEffect(() => {
@@ -395,12 +461,14 @@ const data = {
                   value={formData.data_recebimento}
                   selected={formData.data_recebimento}
                   onChange={handleDateChange('data_recebimento')}
+                  maxDate={today} // Define a data mínima como a data atual
                   dateFormat="dd/MM/yyyy"
                   placeholderText="Selecione a data de recebimento"
                   showYearDropdown
                   scrollableYearDropdown
                   yearDropdownItemNumber={15}
                   ref={dateRef}
+                  disabled={temRegistrosTemporarios}
                   required
                 />
             </Form.Group>
@@ -496,7 +564,7 @@ const data = {
                   </div>
                   <div className='row-payment row-total'>
                     <span><FontAwesomeIcon icon={faMoneyBillWave} />Total dos Pagamentos:</span>
-                    <span className='row-payment-value'>R$ {valorRestante.toFixed(2)}</span>
+                    <span className='row-payment-value'>R$ {valorRecebido.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
@@ -575,14 +643,67 @@ const data = {
         )}
         {section === 'confirmacao' && (
         <>
-          <Button variant="outline-secondary" onClick={handlePreviousSectionConfirma} className='btn-footer'> 
-            <FontAwesomeIcon icon={faBackward} /> Voltar
+          <Button variant="outline-secondary" onClick={handlePreviousSectionConfirma} className='btn-footer'>
+            <FontAwesomeIcon icon={faBackward} />  Voltar
           </Button>
-          <Button variant="primary" onClick={handleFormSubmit} className='pagamento-button'>
-              Confirmar <FontAwesomeIcon icon={faCheck} className="receive" />
-          </Button>
-        </>
+          {valorRestante > 0 && (
+            <Button variant="primary" onClick={handleNextVencimento} className='pagamento-button'>
+              Confirmar
+            </Button>
+          )}
+          {valorRestante === 0 && (
+            <Button variant="primary" onClick={handleFormSubmit} className='pagamento-button'>
+              Confirmar
+              <FontAwesomeIcon icon={faCheck} className="receive" />
+            </Button>
+          )}
+          
+      </>
         )}
+      </Modal.Footer>
+    </Modal>
+    {/* Modal para solicitar a data de vencimento do valor restante */}
+    <Modal show={abrirModalVencimento} onHide={() => setAbrirModalVencimento(false)} className="custom-modal">
+      <Modal.Header>
+        <Modal.Title>Prorrogação do Documento:</Modal.Title>
+        <Button variant="link" className="close-btn" onClick={() => setAbrirModalVencimento(false)}>
+          <FontAwesomeIcon icon={faTimes} className="fa-icon-xmark" />
+        </Button>
+      </Modal.Header>
+      <div className='modal-vencimento-title'>
+        <h5>Qual será a data de vencimento do valor restante:</h5>
+      </div>
+      <Modal.Body className='modal-vencimento'>
+        <Form.Group controlId="dataVencimento" >
+          <Form.Label>Data de Vencimento <span className="required-add">*</span></Form.Label>
+          <DatePicker
+                  className="form-control form-control-vencimento"
+                  
+                  value={formData.dt_vencimento}
+                  onChange= {handleDateChange('dt_vencimento')}
+                  maxDate={today} // Define a data mínima como a data atual
+                  dateFormat="dd/MM/yyyy"
+                  placeholderText="Selecione a data de vencimento"
+                  showYearDropdown
+                  scrollableYearDropdown
+                  yearDropdownItemNumber={15}
+                  ref={dateRef}
+                  required
+                />
+          
+        </Form.Group>
+
+        
+      </Modal.Body>
+      <Modal.Footer>
+        <div className='Btns-venc'>
+            <Button variant="outline-secondary" onClick={() => setAbrirModalVencimento(false)} className='btn-footer'>
+              <FontAwesomeIcon icon={faBackward} />  Voltar
+            </Button>
+            <Button variant="primary" onClick={handleNextSectionConfirma} className='btn-vencimento' disabled={loading}>
+            {loading ? 'Gerando...' : 'Gerar'} <FontAwesomeIcon icon={faCheck} className="receive" />
+            </Button>
+        </div>
       </Modal.Footer>
     </Modal>
 
