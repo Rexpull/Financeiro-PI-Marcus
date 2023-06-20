@@ -20,6 +20,25 @@
   transform: translateY(-2px);
 }
 
+#Delete-payment-icon{
+  box-shadow: 0px 10px 13px -7px #ed1515;
+	background:linear-gradient(to bottom, #f0182a 5%, #e63333 100%);
+	background-color:#f0182a;
+	border-radius:4px;
+	border:1px solid #f01818;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	padding:5px 9px;
+}
+
+#Delete-payment-icon:hover {
+	background:linear-gradient(to bottom, #e63333 5%, #f0182a 100%);
+	background-color:#e63333;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
 #Edit-icon{
   box-shadow: 0px 10px 14px -7px #064558;
     background:linear-gradient(to bottom, #72d1ee 5%, #49b6d6 100%);
@@ -121,6 +140,17 @@
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
  }
 
+ .delete-estorno {
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: #2c2a2a !important; 
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+ }
 
 
 .confirm-delete {
@@ -130,6 +160,18 @@
     display: flex;
     align-items: center;
     background: #c62828 !important; 
+    border: none;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+   }
+   
+   .cancel-delete {
+    width: 150px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    background: #2c2a2a !important; 
     border: none;
     border-radius: 5px;
     box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
@@ -184,6 +226,31 @@
   .custom-footer button{
     width: 100%;
   }
+
+.btn-footer{
+  width: 120px !important;
+}
+
+.btn-next{
+  width: 140px !important;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  align-self: end;
+  justify-self: end !important; 
+  margin-left: 90%;
+}
+
+.btn-next2{
+  width: 140px !important;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  align-self: end;
+ 
+}
 
 
 .nav{
@@ -366,8 +433,18 @@ body{
 
 .MuiTablePagination-actions{
   display: flex !important;
+  width:40px;
 }
 
+.MuiTablePagination-selectLabel{
+  padding: 0 !important;
+}
+
+.MuiTablePagination-toolbar{
+  margin: 0 !important;
+  max-width: 1300px !important;
+  padding: 0 !important;
+}
 
 .action-icons{
   width: 150px;
@@ -397,7 +474,11 @@ body{
   margin-left: 60px;
 }
 
-
+.modal-footer{
+  display: flex;
+  justify-content: space-between !important;
+  gap: 50%;
+}
 .info-modal{
   align-self: center;
   display: flex;
@@ -453,6 +534,7 @@ body{
 .registro-info-pagamento{
   display: flex;
   justify-content: space-around;
+
 }
 .registro-flex{
   display: flex;
@@ -496,6 +578,7 @@ body{
 
 .pagamento{
   width: 35%;
+  
 }
 
 .pagamento-child{
@@ -510,6 +593,11 @@ body{
 .pagamento-button{
   background-color: #4b8f29 !important;
   border: 1px solid #3e7327 !important;
+  width: 135px !important;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
 }
 
 .disabled {
@@ -546,4 +634,74 @@ body{
 .notFound img{
   width: 200px;
 
+}
+
+.close-btn{
+  width: 40px;
+}
+
+
+.rightSide-payment{
+  width: 55%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rightSide-payment h1{
+  font-size: 20px;
+  background: #EFEFEF;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-weight: 700;
+  width: 100%;
+}
+
+.rightSide-payment img {
+  margin-top: 30px;
+}
+
+.rightSide-payment p {
+  margin-top: 30px;
+}
+
+
+
+.valor-restante{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.confirm-payment-section{
+  display: flex;
+  justify-content: space-around;
+}
+
+.confirm-payment-div{
+  font-size: 1em;
+    box-shadow: 5px 5px 13px #C3C3C3;
+    max-width: 335px;
+    padding: 1% 1em;
+    margin: 1% auto;
+}
+
+
+.row-payment{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.row-total{
+  border-top: 1px solid #dee2e6;
+  padding-top: 5px;
+  margin-top: 3px;
+}
+
+.row-payment-value{
+ 
+  font-size: 14px;
 }

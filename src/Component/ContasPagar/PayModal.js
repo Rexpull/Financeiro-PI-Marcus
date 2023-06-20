@@ -330,28 +330,28 @@ function ReceiveModal({ show, handleClose, formData, handleChange, handleSubmit,
       <Modal.Footer>
         {section === 'formaPagamento' && (
            <>
-           <Button variant="outline-secondary" onClick={handlePreviousSection}>
-           <FontAwesomeIcon icon={faBackward} /> Voltar
+           <Button variant="outline-secondary" onClick={handlePreviousSection} className='btn-footer'>
+            <FontAwesomeIcon icon={faBackward} /> Voltar
            </Button>
            {formData.forma_quitacao && formData.valor_recebido && formData.data_recebimento ? (
              formData.valor_recebido !== 0 || formData.valor_recebido !== 0.00 ? (
                <Button variant="primary" onClick={handleFormSubmit} className='pagamento-button'>
-                 Confirmar <FontAwesomeIcon icon={faCheck} className="receive" />
+                 Confirmar <FontAwesomeIcon icon={faCheck} className="receive btn-footer" />
                </Button>
              ) : (
                <Button variant="primary" disabled className='pagamento-disabled pagamento-button'>
-                 Confirmar <FontAwesomeIcon icon={faCheck} className="receive" />
+                 Confirmar <FontAwesomeIcon icon={faCheck} className="receive btn-footer" />
                </Button>
              )
            ) : (
              <Button variant="primary" disabled className='pagamento-disabled pagamento-button'>
-               Confirmar <FontAwesomeIcon icon={faCheck} className="receive" />
+               Confirmar <FontAwesomeIcon icon={faCheck} className="receive btn-footer" />
              </Button>
            )}
          </>
         )}
         {section === 'recebimento' && (
-          <Button variant="primary" onClick={handleNextSection}>
+          <Button variant="primary" onClick={handleNextSection} className='btn-next'>
             Próximo <FontAwesomeIcon icon={faForward} className="fa-icon-forward" />
           </Button>
         )}

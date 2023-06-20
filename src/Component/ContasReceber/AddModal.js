@@ -11,6 +11,7 @@ import DatePicker from 'react-datepicker';
 import { format } from 'date-fns';
 
 
+
 function Header() {
   const [show, setShow] = useState(false);
   const [formData, setFormData] = useState({
@@ -20,7 +21,8 @@ function Header() {
     dt_vencimento: '',
     valor: '',
     observacao: '',
-    situacao: ''
+    situacao: '',
+    valor_recebido: '',
   });
 
   const [startDate, setStartDate] = useState(null);
@@ -96,7 +98,8 @@ function Header() {
       ...formData,
       dt_lancamento: startDate ? format(startDate, 'yyyy-MM-dd') : '',
       dt_vencimento: endDate ? format(endDate, 'yyyy-MM-dd') : '',
-      situacao: situacao
+      situacao: situacao,
+      valor_recebido: formData.valor,
     };
     
 
@@ -114,6 +117,8 @@ function Header() {
     } catch (error) {
       console.log(error);
     }
+
+  
   };
 
   return (

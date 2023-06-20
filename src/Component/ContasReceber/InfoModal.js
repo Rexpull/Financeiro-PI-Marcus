@@ -28,7 +28,7 @@ const InfoModal = ({ show, handleClose, mhs }) => {
     <Modal show={show} onHide={handleClose} className="info-modal">
       <Modal.Header>
         <Modal.Title>
-          <FontAwesomeIcon icon={faInfo} style={{ color: 'green', paddingRight: '5px', fontSize: '30px' }} /> Informações
+          <FontAwesomeIcon icon={faInfo} style={{ color: 'green', paddingRight: '5px',  paddingLeft: '5px', fontSize: '30px' }} /> Informações
         </Modal.Title>
         <Button variant="link" className="close-btn" onClick={handleClose}>
           <FontAwesomeIcon icon={faTimes} className="fa-icon-xmark" />

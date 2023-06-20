@@ -117,7 +117,8 @@ function DataTable({ mhs, refresh }) {
           }
         },
         {
-          label: 'Não, voltar',
+          className: 'cancel-delete',
+          label: 'Cancelar',
           onClick: () => {}
         }
       ]
@@ -144,6 +145,7 @@ function DataTable({ mhs, refresh }) {
           }
         },
         {
+          className: 'delete-estorno',
           label: 'Cancelar',
           onClick: () => {}
         }

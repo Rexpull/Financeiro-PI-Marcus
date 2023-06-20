@@ -3,13 +3,14 @@ img {
  }
 
 
-
 .teste {
-  height: 100%;
+  max-height: 100%;
+  max-width: 100%;
   width: 100%;
   display: flex;
   justify-content: space-between;
   background-color:  #363636;
+
 }
 .teste img:hover{
   cursor: pointer;
@@ -150,6 +151,31 @@ ul{
   margin-right: 20px !important;
 }
 
+
+.custom-menu{
+  left: 70% !important;
+  top: 45px !important;
+}
+
+.css-1ka5eyc-MuiPaper-root-MuiMenu-paper-MuiPopover-paper {
+  background-color: #4b4a4a !important;
+  color: white !important;
+  width: 210px !important;
+  margin-right: 190px !important;
+
+}
+
+.notifi-item{
+  height: 80px !important;
+  flex-wrap: wrap !important;
+  font-size: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  max-width: 100% !important;
+  justify-content: flex-start !important;
+  
+}
+
 .dropdown-menu{
   width: 30px;
   height: 50px;
@@ -251,4 +277,16 @@ ul{
 .d-user small{
   text-align: left;
   color: rgb(68, 249, 68)
+}
+
+
+.dropdown{
+  left: -10px !important;
+  top: 17px !important;
+}
+
+.dropdown-child{
+  display: flex;
+  align-items: center;
+  gap: 7px;
 }
